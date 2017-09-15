@@ -43,7 +43,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         
         let request = MKLocalSearchRequest()
-        request.naturalLanguageQuery = "grocery"
+        request.naturalLanguageQuery = "parks"
         request.region = self.mapView.region
         
         
