@@ -82,13 +82,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if (view.annotation?.title)! == "You found a berry!"{
+        if (view.annotation?.title)! == "You found a berry 😀!" {
             self.score += 5
+            view.image = UIImage(named: "boysenberry")
+
         }
-        else if (view.annotation?.title)! == "You found a poison berry! :("{
+        else if (view.annotation?.title)! == "You found a poison berry 🤢!" {
             self.score -= 6
+            view.image = UIImage(named: "poisonberry")
         }
         self.scoreField.text = String(self.score)
+   
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -96,7 +101,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         //added this code
         manager.stopUpdatingLocation()
         //how much with want to zoom
-        let span : MKCoordinateSpan = MKCoordinateSpanMake(0.05, 0.05)
+        let span : MKCoordinateSpan = MKCoordinateSpanMake(0.02, 0.02)
         
         //location of the user
         let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(currentLocation!.coordinate.latitude, currentLocation!.coordinate.longitude)
@@ -128,11 +133,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     annotation.coordinate.longitude = item.placemark.coordinate.longitude
                     
                     if random <= 1 {
-                        annotation.title = "You found a berry!"
+                        annotation.title = "You found a berry 😀!"
                     }
                         
                     else if random == 2 {
-                        annotation.title = "You found a poison berry! :("
+                        annotation.title = "You found a poison berry 🤢!"
                     }
                     self.mapView.addAnnotation(annotation)
                 }
@@ -149,16 +154,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
-            annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//            annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             annotationView!.canShowCallout = true
         } else {
             annotationView!.annotation = annotation
         }
         
+     
         //        let customPointAnnotation = annotation as! CustomPointAnnotation
         annotationView!.image = UIImage(named: "berry")
+   
         
         return annotationView
     }
+    
+
+
 }
 
