@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import MapKit
+import AVFoundation
 
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     @IBOutlet weak var timerField: UITextField!
@@ -28,17 +29,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     var timer = Timer()
     var score: Int = 0
     var coordinates: [CLLocationCoordinate2D] = []
+    var backgroundMusicPlayer = AVAudioPlayer()
     
-    //add pointers
+    func playBackgroundMusic(filename: String) {
+        let url = Bundle.main.url(forResource: filename, withExtension: nil)
+        guard let newURL = url else {
+            print("Could not find file: \(filename)")
+            return
+        }
+        do {
+            backgroundMusicPlayer = try AVAudioPlayer(contentsOf: newURL)
+            backgroundMusicPlayer.numberOfLoops = -1
+            backgroundMusicPlayer.prepareToPlay()
+            backgroundMusicPlayer.play()
+        } catch let error as NSError {
+            print(error.description)
+        }
+    }
+    
+    
     func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(ViewController.updateTimer)), userInfo: nil, repeats: true)
     }
-
+    
     func updateTimer() {
         if Int(seconds) < 1 {
             print("Alarm going off")
             timer.invalidate()
-//            performSegue(withIdentifier: "mySegue", sender: nil)
+            //            performSegue(withIdentifier: "mySegue", sender: nil)
         }
         else {
             self.seconds -= 1
@@ -46,7 +64,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             self.timerField.text = String(self.seconds)
         }
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +76,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         // for custom pin annotations
         mapView.delegate = self
         mapView.mapType = MKMapType.standard
+        playBackgroundMusic(filename: "Viva La Vida.m4a")
     }
-        
+    
     
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -86,7 +105,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         self.mapView.setRegion(region, animated: true)
         self.mapView.showsUserLocation = true
         
-    //making a request for parks  and groceries landmarks
+        //making a request for parks  and groceries landmarks
         let request = MKLocalSearchRequest()
         let locations = ["parks", "groceries"]
         var count = 0
@@ -107,9 +126,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     let annotation = MKPointAnnotation()
                     annotation.coordinate.latitude = item.placemark.coordinate.latitude
                     annotation.coordinate.longitude = item.placemark.coordinate.longitude
+                    
                     if random <= 1 {
-                    annotation.title = "You found a berry!"
+                        annotation.title = "You found a berry!"
                     }
+                        
                     else if random == 2 {
                         annotation.title = "You found a poison berry! :("
                     }
@@ -134,7 +155,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             annotationView!.annotation = annotation
         }
         
-//        let customPointAnnotation = annotation as! CustomPointAnnotation
+        //        let customPointAnnotation = annotation as! CustomPointAnnotation
         annotationView!.image = UIImage(named: "berry")
         
         return annotationView
