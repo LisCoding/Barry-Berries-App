@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="currentLocation" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +21,53 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mmo-EC-KpA">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="569"/>
+                            </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eV8-j1-iG0">
+                                <rect key="frame" x="166" y="592" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wnm-aM-6y0">
+                                <rect key="frame" x="269" y="592" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZA2-yc-OfK">
+                                <rect key="frame" x="16" y="577" width="70" height="70"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="eV8-j1-iG0" firstAttribute="leading" secondItem="ZA2-yc-OfK" secondAttribute="trailing" constant="80" id="8AO-cb-Me7"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ZA2-yc-OfK" secondAttribute="bottom" constant="20" id="Bnm-xU-RR4"/>
+                            <constraint firstAttribute="trailing" secondItem="Mmo-EC-KpA" secondAttribute="trailing" id="DU0-Bx-uXT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Wnm-aM-6y0" secondAttribute="trailing" constant="48" id="JIg-L8-Fm4"/>
+                            <constraint firstItem="Mmo-EC-KpA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Jez-Zh-3R1"/>
+                            <constraint firstItem="Wnm-aM-6y0" firstAttribute="leading" secondItem="eV8-j1-iG0" secondAttribute="trailing" constant="61" id="KmO-e7-IbG"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Wnm-aM-6y0" secondAttribute="bottom" constant="54" id="PZt-aT-DCS"/>
+                            <constraint firstItem="Mmo-EC-KpA" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="adw-8Y-pUk"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eV8-j1-iG0" secondAttribute="bottom" constant="54" id="fNB-EF-6fp"/>
+                            <constraint firstItem="eV8-j1-iG0" firstAttribute="leading" secondItem="ZA2-yc-OfK" secondAttribute="trailing" constant="80" id="l6R-n7-uUz"/>
+                            <constraint firstItem="ZA2-yc-OfK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="lui-4b-ch7"/>
+                            <constraint firstItem="eV8-j1-iG0" firstAttribute="top" secondItem="Mmo-EC-KpA" secondAttribute="bottom" constant="23" id="oYy-VW-5ec"/>
+                            <constraint firstItem="ZA2-yc-OfK" firstAttribute="top" secondItem="Mmo-EC-KpA" secondAttribute="bottom" constant="8" id="ohc-ao-q9t"/>
+                            <constraint firstItem="ZA2-yc-OfK" firstAttribute="top" secondItem="Mmo-EC-KpA" secondAttribute="bottom" constant="8" id="rNo-N9-iPY"/>
+                            <constraint firstItem="Wnm-aM-6y0" firstAttribute="top" secondItem="Mmo-EC-KpA" secondAttribute="bottom" constant="23" id="tqB-Yi-WeJ"/>
+                            <constraint firstItem="Wnm-aM-6y0" firstAttribute="leading" secondItem="eV8-j1-iG0" secondAttribute="trailing" constant="61" id="xwE-1v-yS8"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="Mmo-EC-KpA" id="iQq-Hu-tpb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="988" y="-403"/>
         </scene>
     </scenes>
 </document>

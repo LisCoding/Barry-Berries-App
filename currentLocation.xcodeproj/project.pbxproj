@@ -13,6 +13,7 @@
 		7F5B16361F6B3D5500D0685D /* currentLocation.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F5B16341F6B3D5500D0685D /* currentLocation.xcdatamodeld */; };
 		7F5B16381F6B3D5500D0685D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B16371F6B3D5500D0685D /* Assets.xcassets */; };
 		7F5B163B1F6B3D5500D0685D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B16391F6B3D5500D0685D /* LaunchScreen.storyboard */; };
+		7F5B16441F6B3E5900D0685D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F5B16431F6B3E5900D0685D /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		7F5B16371F6B3D5500D0685D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F5B163A1F6B3D5500D0685D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F5B163C1F6B3D5500D0685D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F5B16431F6B3E5900D0685D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F5B16441F6B3E5900D0685D /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +45,7 @@
 			children = (
 				7F5B162C1F6B3D5500D0685D /* currentLocation */,
 				7F5B162B1F6B3D5500D0685D /* Products */,
+				7F5B16421F6B3E5900D0685D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,6 +69,14 @@
 				7F5B16341F6B3D5500D0685D /* currentLocation.xcdatamodeld */,
 			);
 			path = currentLocation;
+			sourceTree = "<group>";
+		};
+		7F5B16421F6B3E5900D0685D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7F5B16431F6B3E5900D0685D /* CoreLocation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
