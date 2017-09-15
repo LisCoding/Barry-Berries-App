@@ -11,18 +11,42 @@ import CoreLocation
 import MapKit
 
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+    @IBOutlet weak var timerField: UITextField!
     
+    @IBOutlet weak var scoreField: UITextField!
     //    var annotations: [MKAnnotation] = Array()
     
+    @IBAction func startButtonPressed(_ sender: UIButton) {
+        sender.isHidden = true
+        runTimer()
+    }
     
     @IBOutlet weak var mapView: MKMapView!
     let manager = CLLocationManager()
-    
-    // custom pin annotations
-    var pointAnnotation: CustomPointAnnotation!
-    var pinAnnotationView: MKPinAnnotationView!
+    var currentLocation: CLLocation?
+    var seconds = 65
+    var timer = Timer()
+    var score: Int = 0
+    var coordinates: [CLLocationCoordinate2D] = []
     
     //add pointers
+    func runTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(ViewController.updateTimer)), userInfo: nil, repeats: true)
+    }
+
+    func updateTimer() {
+        if Int(seconds) < 1 {
+            print("Alarm going off")
+            timer.invalidate()
+//            performSegue(withIdentifier: "mySegue", sender: nil)
+        }
+        else {
+            self.seconds -= 1
+            print(seconds)
+            self.timerField.text = String(self.seconds)
+        }
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,30 +59,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         mapView.delegate = self
         mapView.mapType = MKMapType.standard
     }
+        
+    
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if (view.annotation?.title)! == "You found a berry!"{
+            self.score += 5
+        }
+        else if (view.annotation?.title)! == "You found a poison berry! :("{
+            self.score -= 6
+        }
+        self.scoreField.text = String(self.score)
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let user_location = locations[0]
+        currentLocation = locations[0]
         //added this code
         manager.stopUpdatingLocation()
         //how much with want to zoom
-        let span : MKCoordinateSpan = MKCoordinateSpanMake(0.1, 0.1)
+        let span : MKCoordinateSpan = MKCoordinateSpanMake(0.05, 0.05)
         
         //location of the user
-        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(user_location.coordinate.latitude, user_location.coordinate.longitude)
+        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(currentLocation!.coordinate.latitude, currentLocation!.coordinate.longitude)
         
         let region : MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
         self.mapView.setRegion(region, animated: true)
         self.mapView.showsUserLocation = true
         
-        
-        
-        //making a request for parks  and groceries landmarks
+    //making a request for parks  and groceries landmarks
         let request = MKLocalSearchRequest()
         let locations = ["parks", "groceries"]
         var count = 0
         while count < 2 {
             request.naturalLanguageQuery = locations[count]
-            //change
             request.region = region
             
             
@@ -68,34 +101,28 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     print("Search error: \(String(describing: error))")
                     return
                 }
+                
                 for item in response.mapItems {
+                    let random = arc4random_uniform(3)
                     let annotation = MKPointAnnotation()
-                    annotation.title! = "You found a berry!"
-                    annotation.subtitle! = "Do you want to eat it? Tap to continue..."
-//                    print(annotation.title)
-//                    print(annotation.subtitle)
                     annotation.coordinate.latitude = item.placemark.coordinate.latitude
                     annotation.coordinate.longitude = item.placemark.coordinate.longitude
-                    //adding annotation to the map
-//                    self.mapView.addAnnotation(annotation)
-                    print("This  is my annotation", annotation)
-                    // custom pin annotations
-//                    self.pointAnnotation = CustomPointAnnotation()
-//                    self.pointAnnotation.pinCustomImageName = "berry"
-//                    self.pointAnnotation.coordinate = myLocation
-
-//                    self.pinAnnotationView = MKPinAnnotationView(annotation: self.pointAnnotation, reuseIdentifier: "pin")
+                    if random <= 1 {
+                    annotation.title = "You found a berry!"
+                    }
+                    else if random == 2 {
+                        annotation.title = "You found a poison berry! :("
+                    }
                     self.mapView.addAnnotation(annotation)
                 }
                 search.cancel()
             }
             count += 1
         }
-
     }
     
     // Custom pin annotations
-    func mapAnnotationView(_ mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseIdentifier = "pin"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
         
