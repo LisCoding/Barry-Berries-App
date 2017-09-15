@@ -47,6 +47,9 @@
                                                 <state key="normal" title="RESET">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="resetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TrZ-Jd-yDl"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -113,10 +116,15 @@
                                     <constraint firstAttribute="height" constant="60" id="ewX-hu-Iac"/>
                                 </constraints>
                             </stackView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="5CG-2i-dsd">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x9k-Uf-5Rr">
-                                <rect key="frame" x="0.0" y="591" width="375" height="76"/>
-                                <color key="backgroundColor" red="1" green="0.2030675022" blue="0.8221730921" alpha="0.40344071061643838" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="30"/>
+                                <rect key="frame" x="0.0" y="527" width="375" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="P0B-7j-x3E"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="40"/>
                                 <state key="normal" title="S T A R T !">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -129,7 +137,8 @@
                         <constraints>
                             <constraint firstItem="Mmo-EC-KpA" firstAttribute="top" secondItem="h0x-T8-lmN" secondAttribute="bottom" id="01Z-vb-TSY"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="dey-28-WBx" secondAttribute="bottom" constant="8" id="1lP-Tn-8D3"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="x9k-Uf-5Rr" secondAttribute="bottom" id="9fM-mD-bn9"/>
+                            <constraint firstItem="x9k-Uf-5Rr" firstAttribute="leading" secondItem="LcA-An-qrB" secondAttribute="leading" id="5xi-Zz-EPR"/>
+                            <constraint firstAttribute="trailing" secondItem="5CG-2i-dsd" secondAttribute="trailing" id="7Ky-3W-dvR"/>
                             <constraint firstItem="f3y-q7-ex7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="28" id="BBN-Sl-eG7"/>
                             <constraint firstAttribute="trailing" secondItem="jzn-wO-ej1" secondAttribute="trailing" id="BrN-Vb-8EF"/>
                             <constraint firstAttribute="trailing" secondItem="Mmo-EC-KpA" secondAttribute="trailing" id="CGB-yi-kOV"/>
@@ -141,25 +150,30 @@
                             <constraint firstItem="Mmo-EC-KpA" firstAttribute="top" secondItem="f3y-q7-ex7" secondAttribute="bottom" constant="8" id="Ihi-ok-vuR"/>
                             <constraint firstItem="f3y-q7-ex7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="PNb-3s-3vP"/>
                             <constraint firstItem="Mmo-EC-KpA" firstAttribute="top" secondItem="jzn-wO-ej1" secondAttribute="bottom" id="SpH-e5-i6R"/>
+                            <constraint firstItem="x9k-Uf-5Rr" firstAttribute="trailing" secondItem="LcA-An-qrB" secondAttribute="trailing" id="Sy5-59-7ko"/>
                             <constraint firstAttribute="trailing" secondItem="LcA-An-qrB" secondAttribute="trailing" id="VFh-T3-bAc"/>
+                            <constraint firstItem="5CG-2i-dsd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VIS-lK-FMa"/>
+                            <constraint firstItem="5CG-2i-dsd" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="VUS-hY-6dE"/>
                             <constraint firstItem="LcA-An-qrB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="YK4-j8-LK8"/>
                             <constraint firstItem="jzn-wO-ej1" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Z0S-5A-rjc"/>
                             <constraint firstItem="h0x-T8-lmN" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Ze3-vp-bka"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="5CG-2i-dsd" secondAttribute="bottom" id="eOM-gL-hnZ"/>
+                            <constraint firstItem="LcA-An-qrB" firstAttribute="top" secondItem="x9k-Uf-5Rr" secondAttribute="bottom" constant="16" id="f1f-97-zyj"/>
                             <constraint firstItem="jzn-wO-ej1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="hS8-Sw-dKP"/>
                             <constraint firstItem="LcA-An-qrB" firstAttribute="top" secondItem="Mmo-EC-KpA" secondAttribute="bottom" id="qrZ-lK-wce"/>
-                            <constraint firstItem="x9k-Uf-5Rr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="tU8-ZZ-1R9"/>
-                            <constraint firstAttribute="trailing" secondItem="x9k-Uf-5Rr" secondAttribute="trailing" id="xL0-FB-uud"/>
                             <constraint firstAttribute="trailing" secondItem="f3y-q7-ex7" secondAttribute="trailing" constant="16" id="xt1-TU-2MW"/>
                             <constraint firstItem="h0x-T8-lmN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="zBf-9l-jLg"/>
-                            <constraint firstItem="x9k-Uf-5Rr" firstAttribute="top" secondItem="Mmo-EC-KpA" secondAttribute="bottom" id="zxU-nd-SAW"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="barryStatus" destination="vYV-C2-aeL" id="kv2-Sw-TBu"/>
                         <outlet property="lowerLogo" destination="AaX-9L-mMr" id="BD8-PE-JyX"/>
                         <outlet property="mapView" destination="Mmo-EC-KpA" id="iQq-Hu-tpb"/>
+                        <outlet property="resetButton" destination="9f0-iW-QA8" id="eNU-K4-BiE"/>
                         <outlet property="scoreLabel" destination="nZQ-KJ-bHq" id="vwz-m7-1LW"/>
                         <outlet property="scoreTitle" destination="ptC-vs-dCF" id="3N4-dH-BAB"/>
+                        <outlet property="startButton" destination="x9k-Uf-5Rr" id="UDu-YC-wTe"/>
+                        <outlet property="startScreenView" destination="5CG-2i-dsd" id="Vq3-Wp-54o"/>
                         <outlet property="timerLabel" destination="nT6-jw-t4p" id="7cI-nN-8BE"/>
                         <outlet property="timerTitle" destination="spp-Cl-Nb7" id="PDP-XX-fy6"/>
                         <outlet property="upperLogo" destination="h0x-T8-lmN" id="rOL-0N-kME"/>
@@ -172,6 +186,7 @@
     </scenes>
     <resources>
         <image name="barry" width="120" height="60"/>
+        <image name="launchScreen" width="1242" height="2208"/>
         <image name="logo" width="120" height="60"/>
     </resources>
 </document>

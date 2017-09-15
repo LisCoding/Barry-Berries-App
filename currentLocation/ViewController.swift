@@ -11,11 +11,49 @@ import CoreLocation
 import MapKit
 import AVFoundation
 
+//added this class to stop updating the score when the user pressed the pin again and to keep the images when the user zoom in- zoom out
+
+class BerryAnotation : MKPointAnnotation {
+    var pressed = false
+    
+    func isPoison() -> Bool {
+        return self.title == "You found a poison berry 🤢!";
+    }
+    
+    func getScore() -> Int {
+        return isPoison() ? -6 : 5;
+    }
+    
+    func getImage() -> UIImage? {
+        if !pressed {
+            return UIImage(named: "berry")
+        } else {
+            if isPoison() {
+                return UIImage(named: "poisonberry")
+            } else {
+                return UIImage(named: "boysenberry")
+            }
+        }
+    }
+    
+    func getStatus() -> UIImage? {
+        if isPoison() {
+            return UIImage(named: "sad")
+        } else {
+            return UIImage(named: "yummy")
+        }
+    }
+}
+
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     
     
     //    var annotations: [MKAnnotation] = Array()
+    
+    @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var startScreenView: UIImageView!
+    @IBOutlet weak var startButton: UIButton!
     
     // Upper status bar
     @IBOutlet weak var timerTitle: UILabel!
@@ -31,20 +69,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     @IBAction func startButtonPressed(_ sender: UIButton) {
         sender.isHidden = true
+        startScreenView.isHidden = true
         upperLogo.isHidden = true
-        timerTitle.isHidden = false
-        timerLabel.isHidden = false
-        scoreTitle.isHidden = false
-        scoreLabel.isHidden = false
-        lowerLogo.isHidden = false
-        barryStatus.isHidden = false
+//        timerTitle.isHidden = false
+//        timerLabel.isHidden = false
+//        scoreTitle.isHidden = false
+//        scoreLabel.isHidden = false
+//        lowerLogo.isHidden = false
+//        barryStatus.isHidden = false
+        startGame()
+        seconds = 20
         runTimer()
+    }
+    
+    @IBAction func resetButtonPressed(_ sender: UIButton) {
+        startGame()
     }
     
     @IBOutlet weak var mapView: MKMapView!
     let manager = CLLocationManager()
     var currentLocation: CLLocation?
-    var seconds = 65
+    var seconds = 20    // timer length
     var timer = Timer()
     var score: Int = 0
     var coordinates: [CLLocationCoordinate2D] = []
@@ -73,7 +118,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     func updateTimer() {
         if Int(seconds) < 1 {
+            backgroundMusicPlayer.pause()
+            startScreenView.isHidden = false
+            startButton.isHidden = false
             print("Alarm going off")
+            //addded timer to end game on update function
+            if score >= 20 {
+                
+                self.createGoodAlert(title: "Barry found his Honey!", message: "😊")
+                
+            }
+                
+            else {
+                
+                self.createBadAlert(title: "Barry died a horrible death sad and alone..", message: "☠️")
+                
+            }
+            //************
+            
             timer.invalidate()
             //            performSegue(withIdentifier: "mySegue", sender: nil)
         }
@@ -87,62 +149,93 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        startGame()
+
+    }
+    
+    //start game function
+    func startGame() {
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
         
-        // hide lower status bar images until Start pressed
-        lowerLogo.isHidden = true
-        barryStatus.isHidden = true
+        //        // hide lower status bar images until Start pressed
+        //        lowerLogo.isHidden = true
+        //        barryStatus.isHidden = true
+        //
+        //        // hide upper status bar labels until Start pressed
+        //        timerTitle.isHidden = true
+        //        timerLabel.isHidden = true
+        //        scoreTitle.isHidden = true
+        //        scoreLabel.isHidden = true
         
-        // hide upper status bar labels until Start pressed
-        timerTitle.isHidden = true
-        timerLabel.isHidden = true
-        scoreTitle.isHidden = true
-        scoreLabel.isHidden = true
         
         
         // for custom pin annotations
         mapView.delegate = self
         mapView.mapType = MKMapType.standard
-        playBackgroundMusic(filename: "Viva La Vida.m4a")
+        playBackgroundMusic(filename: "nomnomnom.mp3")
     }
-    
     
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if (view.annotation?.title)! == "You found a berry 😀!" {
-            self.score += 5
-            view.image = UIImage(named: "boysenberry")
-            self.barryStatus.image = UIImage(named: "yummy")
-
+        guard let berryAnnotation = view.annotation as? BerryAnotation else {
+            return
         }
-        else if (view.annotation?.title)! == "You found a poison berry 🤢!" {
-            self.score -= 6
-            view.image = UIImage(named: "poisonberry")
-            self.barryStatus.image = UIImage(named: "sad")
+        if (berryAnnotation.pressed) {
+            return
         }
+        berryAnnotation.pressed = true
+        self.score += berryAnnotation.getScore()
+        view.image = berryAnnotation.getImage()
+        self.barryStatus.image = berryAnnotation.getStatus()
         self.scoreLabel.text = String(self.score)
-   
-        
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        currentLocation = locations[0]
-        //added this code
-        manager.stopUpdatingLocation()
-        //how much with want to zoom
-        let span : MKCoordinateSpan = MKCoordinateSpanMake(0.02, 0.02)
+    var userAnnotation:MKPointAnnotation!;
+    
+    func setUserLocation(_ myLocation: CLLocationCoordinate2D) {
+        if (nil == userAnnotation) {
+            userAnnotation = MKPointAnnotation()
+            self.mapView.addAnnotation(userAnnotation)
+            userAnnotation.title = "Your Location";
+        }
+        userAnnotation.coordinate.latitude = myLocation.latitude
+        userAnnotation.coordinate.longitude = myLocation.longitude
+    }
+    
+    //* ADD FUNCTIONS for pop ups for win or lose:
+    func createBadAlert (title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        self.present(alert, animated: true, completion: nil)
+        let action = UIAlertAction(title: "", style: .default, handler: nil)
+        let image = UIImage(named: "sad")?.withRenderingMode(.alwaysOriginal)
+        let imgViewTitle = UIImageView(frame: CGRect(x: 10, y: 10, width: 30, height: 30))
+        imgViewTitle.image = image
+        action.setValue(image, forKey: "image")
+        alert .addAction(action)
         
+    }
+
+    
+    func createGoodAlert (title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        self.present(alert, animated: true, completion: nil)
+        let image = UIImage(named: "honey")?.withRenderingMode(.alwaysOriginal)
+        let action = UIAlertAction(title: "", style: .default, handler: nil)
+        action.setValue(image, forKey: "image")
+        alert .addAction(action)
+    }
+    //********
+    
+    func onFirstLocationUpdate(_ region: MKCoordinateRegion) {
         //location of the user
-        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(currentLocation!.coordinate.latitude, currentLocation!.coordinate.longitude)
-        
-        let region : MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
         self.mapView.setRegion(region, animated: true)
-        self.mapView.showsUserLocation = true
+        //self.mapView.showsUserLocation = true
         
-        //making a request for parks  and groceries landmarks
+        
+        //making a request for parks and groceries landmarks
         let request = MKLocalSearchRequest()
         let locations = ["parks", "groceries"]
         var count = 0
@@ -159,17 +252,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 }
                 
                 for item in response.mapItems {
+                    
                     let random = arc4random_uniform(3)
-                    let annotation = MKPointAnnotation()
+                    let annotation = BerryAnotation()
                     annotation.coordinate.latitude = item.placemark.coordinate.latitude
                     annotation.coordinate.longitude = item.placemark.coordinate.longitude
                     
                     if random <= 1 {
                         annotation.title = "You found a berry 😀!"
+                        annotation.subtitle = "  @ \(item.name!)"
                     }
                         
                     else if random == 2 {
                         annotation.title = "You found a poison berry 🤢!"
+                        annotation.subtitle = "  @ \(item.name!)"
                     }
                     self.mapView.addAnnotation(annotation)
                 }
@@ -179,27 +275,45 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let isFirstUpdate = currentLocation == nil
+        currentLocation = locations[0]
+        //added this code
+        //        manager.stopUpdatingLocation()
+        //how much with want to zoom
+        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(currentLocation!.coordinate.latitude, currentLocation!.coordinate.longitude)
+        let span : MKCoordinateSpan = MKCoordinateSpanMake(0.02, 0.02)
+        let region : MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
+        if (isFirstUpdate) {
+            onFirstLocationUpdate(region);
+        }
+        setUserLocation(myLocation);
+    }
+    
     // Custom pin annotations
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseIdentifier = "pin"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
-        
+        var annotationView:MKAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
+        let berryAnnotationMethods = BerryAnotation()
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
-//            annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            //            annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             annotationView!.canShowCallout = true
         } else {
             annotationView!.annotation = annotation
         }
         
-     
+        
         //        let customPointAnnotation = annotation as! CustomPointAnnotation
-        annotationView!.image = UIImage(named: "berry")
-   
+        if (annotation === userAnnotation) {
+            annotationView!.image = UIImage(named: "barry")
+        }
+        else {
+            annotationView!.image = berryAnnotationMethods.getImage()
+        }
         
         return annotationView
     }
-    
 
 
 }

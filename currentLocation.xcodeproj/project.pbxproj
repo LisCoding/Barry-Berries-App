@@ -16,6 +16,7 @@
 		7F5B16381F6B3D5500D0685D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B16371F6B3D5500D0685D /* Assets.xcassets */; };
 		7F5B163B1F6B3D5500D0685D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B16391F6B3D5500D0685D /* LaunchScreen.storyboard */; };
 		7F5B16441F6B3E5900D0685D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F5B16431F6B3E5900D0685D /* CoreLocation.framework */; };
+		D6866DA01F6C4B6600815B6C /* nomnomnom.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6866D9F1F6C4B3A00815B6C /* nomnomnom.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		7F5B163A1F6B3D5500D0685D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F5B163C1F6B3D5500D0685D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F5B16431F6B3E5900D0685D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D6866D9F1F6C4B3A00815B6C /* nomnomnom.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nomnomnom.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				56ABCF441F6BEBD700600267 /* Viva La Vida.m4a */,
+				D6866D9F1F6C4B3A00815B6C /* nomnomnom.mp3 */,
 				7F5B162D1F6B3D5500D0685D /* AppDelegate.swift */,
 				7F5B162F1F6B3D5500D0685D /* ViewController.swift */,
 				563044F11F6B92A70053FAEE /* CustomPointAnnnotation.swift */,
@@ -145,6 +148,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6866DA01F6C4B6600815B6C /* nomnomnom.mp3 in Resources */,
 				7F5B163B1F6B3D5500D0685D /* LaunchScreen.storyboard in Resources */,
 				56ABCF451F6BEBD700600267 /* Viva La Vida.m4a in Resources */,
 				7F5B16381F6B3D5500D0685D /* Assets.xcassets in Resources */,
