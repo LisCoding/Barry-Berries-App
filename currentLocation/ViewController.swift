@@ -12,13 +12,32 @@ import MapKit
 import AVFoundation
 
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
-    @IBOutlet weak var timerField: UITextField!
     
-    @IBOutlet weak var scoreField: UITextField!
+    
+    
     //    var annotations: [MKAnnotation] = Array()
+    
+    // Upper status bar
+    @IBOutlet weak var timerTitle: UILabel!
+    @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var scoreTitle: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var upperLogo: UIImageView!
+    
+    
+    // Lower status bar
+    @IBOutlet weak var lowerLogo: UIImageView!
+    @IBOutlet weak var barryStatus: UIImageView!
     
     @IBAction func startButtonPressed(_ sender: UIButton) {
         sender.isHidden = true
+        upperLogo.isHidden = true
+        timerTitle.isHidden = false
+        timerLabel.isHidden = false
+        scoreTitle.isHidden = false
+        scoreLabel.isHidden = false
+        lowerLogo.isHidden = false
+        barryStatus.isHidden = false
         runTimer()
     }
     
@@ -61,7 +80,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         else {
             self.seconds -= 1
             print(seconds)
-            self.timerField.text = String(self.seconds)
+            self.timerLabel.text = String(self.seconds)
         }
     }
     
@@ -72,6 +91,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
+        
+        // hide lower status bar images until Start pressed
+        lowerLogo.isHidden = true
+        barryStatus.isHidden = true
+        
+        // hide upper status bar labels until Start pressed
+        timerTitle.isHidden = true
+        timerLabel.isHidden = true
+        scoreTitle.isHidden = true
+        scoreLabel.isHidden = true
+        
         
         // for custom pin annotations
         mapView.delegate = self
@@ -85,13 +115,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         if (view.annotation?.title)! == "You found a berry 😀!" {
             self.score += 5
             view.image = UIImage(named: "boysenberry")
+            self.barryStatus.image = UIImage(named: "yummy")
 
         }
         else if (view.annotation?.title)! == "You found a poison berry 🤢!" {
             self.score -= 6
             view.image = UIImage(named: "poisonberry")
+            self.barryStatus.image = UIImage(named: "sad")
         }
-        self.scoreField.text = String(self.score)
+        self.scoreLabel.text = String(self.score)
    
         
     }
