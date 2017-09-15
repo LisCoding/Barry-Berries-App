@@ -28,7 +28,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-       func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let user_location = locations[0]
         //how much with want to zoom
         let span : MKCoordinateSpan = MKCoordinateSpanMake(0.1, 0.1)

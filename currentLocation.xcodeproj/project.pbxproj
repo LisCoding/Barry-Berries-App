@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		563044F21F6B92A70053FAEE /* CustomPointAnnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563044F11F6B92A70053FAEE /* CustomPointAnnnotation.swift */; };
 		7F5B162E1F6B3D5500D0685D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5B162D1F6B3D5500D0685D /* AppDelegate.swift */; };
 		7F5B16301F6B3D5500D0685D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5B162F1F6B3D5500D0685D /* ViewController.swift */; };
 		7F5B16331F6B3D5500D0685D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B16311F6B3D5500D0685D /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		563044F11F6B92A70053FAEE /* CustomPointAnnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPointAnnnotation.swift; sourceTree = "<group>"; };
 		7F5B162A1F6B3D5500D0685D /* currentLocation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = currentLocation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F5B162D1F6B3D5500D0685D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F5B162F1F6B3D5500D0685D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 			children = (
 				7F5B162D1F6B3D5500D0685D /* AppDelegate.swift */,
 				7F5B162F1F6B3D5500D0685D /* ViewController.swift */,
+				563044F11F6B92A70053FAEE /* CustomPointAnnnotation.swift */,
 				7F5B16311F6B3D5500D0685D /* Main.storyboard */,
 				7F5B16371F6B3D5500D0685D /* Assets.xcassets */,
 				7F5B16391F6B3D5500D0685D /* LaunchScreen.storyboard */,
@@ -153,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F5B16301F6B3D5500D0685D /* ViewController.swift in Sources */,
+				563044F21F6B92A70053FAEE /* CustomPointAnnnotation.swift in Sources */,
 				7F5B16361F6B3D5500D0685D /* currentLocation.xcdatamodeld in Sources */,
 				7F5B162E1F6B3D5500D0685D /* AppDelegate.swift in Sources */,
 			);
@@ -320,6 +324,7 @@
 				7F5B16411F6B3D5500D0685D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
