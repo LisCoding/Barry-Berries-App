@@ -21,7 +21,7 @@ class BerryAnotation : MKPointAnnotation {
     }
     
     func getScore() -> Int {
-        return isPoison() ? -6 : 5;
+        return isPoison() ? -3 : 5;
     }
     
     func getImage() -> UIImage? {
@@ -46,8 +46,6 @@ class BerryAnotation : MKPointAnnotation {
 }
 
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
-    
-    
     
     //    var annotations: [MKAnnotation] = Array()
     
@@ -78,22 +76,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 //        lowerLogo.isHidden = false
 //        barryStatus.isHidden = false
         startGame()
-        seconds = 20
         runTimer()
     }
     
     @IBAction func resetButtonPressed(_ sender: UIButton) {
         startGame()
+        onFirstLocationUpdate(self.region!)
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
     }
     
     @IBOutlet weak var mapView: MKMapView!
     let manager = CLLocationManager()
     var currentLocation: CLLocation?
-    var seconds = 20    // timer length
+    var seconds = 30    // timer length
     var timer = Timer()
     var score: Int = 0
     var coordinates: [CLLocationCoordinate2D] = []
     var backgroundMusicPlayer = AVAudioPlayer()
+    var region: MKCoordinateRegion?
     
     func playBackgroundMusic(filename: String) {
         let url = Bundle.main.url(forResource: filename, withExtension: nil)
@@ -123,7 +124,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             startButton.isHidden = false
             print("Alarm going off")
             //addded timer to end game on update function
-            if score >= 20 {
+            if score >= 10 {
                 
                 self.createGoodAlert(title: "Barry found his Honey!", message: "😊")
                 
@@ -131,7 +132,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 
             else {
                 
-                self.createBadAlert(title: "Barry died a horrible death sad and alone..", message: "☠️")
+                self.createBadAlert(title: "Barry died from food poisoning", message: "☠️")
                 
             }
             //************
@@ -155,6 +156,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     //start game function
     func startGame() {
+        self.seconds = 30
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestWhenInUseAuthorization()
@@ -237,10 +239,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         
         //making a request for parks and groceries landmarks
         let request = MKLocalSearchRequest()
-        let locations = ["parks", "groceries"]
+        let locations = ["parks", "groceries", "malls", "schools", "fast food", "ice cream"]
         var count = 0
         while count < 2 {
-            request.naturalLanguageQuery = locations[count]
+            let index = Int(arc4random_uniform(6))
+            request.naturalLanguageQuery = locations[index]
             request.region = region
             
             
@@ -284,6 +287,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(currentLocation!.coordinate.latitude, currentLocation!.coordinate.longitude)
         let span : MKCoordinateSpan = MKCoordinateSpanMake(0.02, 0.02)
         let region : MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
+        self.region = region
         if (isFirstUpdate) {
             onFirstLocationUpdate(region);
         }
@@ -305,7 +309,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         
         
         //        let customPointAnnotation = annotation as! CustomPointAnnotation
-        if (annotation === userAnnotation) {
+        if annotation === userAnnotation {
             annotationView!.image = UIImage(named: "barry")
         }
         else {
